@@ -20,13 +20,13 @@
             "id": "JSCCStaticWebsite",
             "path": "MyJSCCStaticWebsite/JSCCStaticWebsite",
             "children": {
-              "JSCCCloudFront-OAI": {
-                "id": "JSCCCloudFront-OAI",
-                "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCCloudFront-OAI",
+              "RSCCL-OAI": {
+                "id": "RSCCL-OAI",
+                "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-OAI",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCCloudFront-OAI/Resource",
+                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-OAI/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
                       "aws:cdk:cloudformation:props": {
@@ -46,13 +46,13 @@
                   "version": "1.134.0"
                 }
               },
-              "JSCCSiteBucket": {
-                "id": "JSCCSiteBucket",
-                "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCSiteBucket",
+              "RSCCLStaticBucket": {
+                "id": "RSCCLStaticBucket",
+                "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCLStaticBucket",
                 "children": {
                   "Notifications": {
                     "id": "Notifications",
-                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCSiteBucket/Notifications",
+                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCLStaticBucket/Notifications",
                     "constructInfo": {
                       "fqn": "@aws-cdk/core.Construct",
                       "version": "1.134.0"
@@ -60,23 +60,17 @@
                   },
                   "Resource": {
                     "id": "Resource",
-                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCSiteBucket/Resource",
+                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCLStaticBucket/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
                       "aws:cdk:cloudformation:props": {
-                        "bucketName": "js-cc-aws-cdk-website-test",
+                        "bucketName": "rs-cc-lessons-cloudfront",
                         "publicAccessBlockConfiguration": {
                           "blockPublicAcls": true,
                           "blockPublicPolicy": true,
                           "ignorePublicAcls": true,
                           "restrictPublicBuckets": true
                         },
-                        "tags": [
-                          {
-                            "key": "aws-cdk:auto-delete-objects",
-                            "value": "true"
-                          }
-                        ],
                         "websiteConfiguration": {
                           "indexDocument": "index.html"
                         }
@@ -89,64 +83,26 @@
                   },
                   "Policy": {
                     "id": "Policy",
-                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCSiteBucket/Policy",
+                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCLStaticBucket/Policy",
                     "children": {
                       "Resource": {
                         "id": "Resource",
-                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCSiteBucket/Policy/Resource",
+                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCLStaticBucket/Policy/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::S3::BucketPolicy",
                           "aws:cdk:cloudformation:props": {
                             "bucket": {
-                              "Ref": "JSCCStaticWebsiteJSCCSiteBucket11BBD5A2"
+                              "Ref": "JSCCStaticWebsiteRSCCLStaticBucket3337F031"
                             },
                             "policyDocument": {
                               "Statement": [
-                                {
-                                  "Action": [
-                                    "s3:GetBucket*",
-                                    "s3:List*",
-                                    "s3:DeleteObject*"
-                                  ],
-                                  "Effect": "Allow",
-                                  "Principal": {
-                                    "AWS": {
-                                      "Fn::GetAtt": [
-                                        "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
-                                        "Arn"
-                                      ]
-                                    }
-                                  },
-                                  "Resource": [
-                                    {
-                                      "Fn::GetAtt": [
-                                        "JSCCStaticWebsiteJSCCSiteBucket11BBD5A2",
-                                        "Arn"
-                                      ]
-                                    },
-                                    {
-                                      "Fn::Join": [
-                                        "",
-                                        [
-                                          {
-                                            "Fn::GetAtt": [
-                                              "JSCCStaticWebsiteJSCCSiteBucket11BBD5A2",
-                                              "Arn"
-                                            ]
-                                          },
-                                          "/*"
-                                        ]
-                                      ]
-                                    }
-                                  ]
-                                },
                                 {
                                   "Action": "s3:GetObject",
                                   "Effect": "Allow",
                                   "Principal": {
                                     "CanonicalUser": {
                                       "Fn::GetAtt": [
-                                        "JSCCStaticWebsiteJSCCCloudFrontOAI7BCE2C80",
+                                        "JSCCStaticWebsiteRSCCLOAIBDFED2E9",
                                         "S3CanonicalUserId"
                                       ]
                                     }
@@ -157,7 +113,7 @@
                                       [
                                         {
                                           "Fn::GetAtt": [
-                                            "JSCCStaticWebsiteJSCCSiteBucket11BBD5A2",
+                                            "JSCCStaticWebsiteRSCCLStaticBucket3337F031",
                                             "Arn"
                                           ]
                                         },
@@ -181,24 +137,6 @@
                       "fqn": "@aws-cdk/aws-s3.BucketPolicy",
                       "version": "1.134.0"
                     }
-                  },
-                  "AutoDeleteObjectsCustomResource": {
-                    "id": "AutoDeleteObjectsCustomResource",
-                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCSiteBucket/AutoDeleteObjectsCustomResource",
-                    "children": {
-                      "Default": {
-                        "id": "Default",
-                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCSiteBucket/AutoDeleteObjectsCustomResource/Default",
-                        "constructInfo": {
-                          "fqn": "@aws-cdk/core.CfnResource",
-                          "version": "1.134.0"
-                        }
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "@aws-cdk/core.CustomResource",
-                      "version": "1.134.0"
-                    }
                   }
                 },
                 "constructInfo": {
@@ -206,21 +144,13 @@
                   "version": "1.134.0"
                 }
               },
-              "Bucket": {
-                "id": "Bucket",
-                "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/Bucket",
-                "constructInfo": {
-                  "fqn": "@aws-cdk/core.CfnOutput",
-                  "version": "1.134.0"
-                }
-              },
-              "JSCCSiteDistribution": {
-                "id": "JSCCSiteDistribution",
-                "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCSiteDistribution",
+              "RSCCLStaticDistribution": {
+                "id": "RSCCLStaticDistribution",
+                "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCLStaticDistribution",
                 "children": {
                   "CFDistribution": {
                     "id": "CFDistribution",
-                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCSiteDistribution/CFDistribution",
+                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCLStaticDistribution/CFDistribution",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::CloudFront::Distribution",
                       "aws:cdk:cloudformation:props": {
@@ -235,7 +165,7 @@
                               "id": "origin1",
                               "domainName": {
                                 "Fn::GetAtt": [
-                                  "JSCCStaticWebsiteJSCCSiteBucket11BBD5A2",
+                                  "JSCCStaticWebsiteRSCCLStaticBucket3337F031",
                                   "RegionalDomainName"
                                 ]
                               },
@@ -246,7 +176,7 @@
                                     [
                                       "origin-access-identity/cloudfront/",
                                       {
-                                        "Ref": "JSCCStaticWebsiteJSCCCloudFrontOAI7BCE2C80"
+                                        "Ref": "JSCCStaticWebsiteRSCCLOAIBDFED2E9"
                                       }
                                     ]
                                   ]
@@ -292,21 +222,21 @@
                   "version": "1.134.0"
                 }
               },
-              "JSCCDeployWithInvalidation": {
-                "id": "JSCCDeployWithInvalidation",
-                "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation",
+              "RSCCL-Bucket-Deployment": {
+                "id": "RSCCL-Bucket-Deployment",
+                "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment",
                 "children": {
                   "AwsCliLayer": {
                     "id": "AwsCliLayer",
-                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/AwsCliLayer",
+                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/AwsCliLayer",
                     "children": {
                       "Code": {
                         "id": "Code",
-                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/AwsCliLayer/Code",
+                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/AwsCliLayer/Code",
                         "children": {
                           "Stage": {
                             "id": "Stage",
-                            "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/AwsCliLayer/Code/Stage",
+                            "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/AwsCliLayer/Code/Stage",
                             "constructInfo": {
                               "fqn": "@aws-cdk/core.AssetStaging",
                               "version": "1.134.0"
@@ -314,11 +244,11 @@
                           },
                           "AssetBucket": {
                             "id": "AssetBucket",
-                            "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/AwsCliLayer/Code/AssetBucket",
+                            "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/AwsCliLayer/Code/AssetBucket",
                             "children": {
                               "Notifications": {
                                 "id": "Notifications",
-                                "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/AwsCliLayer/Code/AssetBucket/Notifications",
+                                "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/AwsCliLayer/Code/AssetBucket/Notifications",
                                 "constructInfo": {
                                   "fqn": "@aws-cdk/core.Construct",
                                   "version": "1.134.0"
@@ -338,7 +268,7 @@
                       },
                       "Resource": {
                         "id": "Resource",
-                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/AwsCliLayer/Resource",
+                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/AwsCliLayer/Resource",
                         "attributes": {
                           "aws:cdk:cloudformation:type": "AWS::Lambda::LayerVersion",
                           "aws:cdk:cloudformation:props": {
@@ -396,7 +326,7 @@
                   },
                   "CustomResourceHandler": {
                     "id": "CustomResourceHandler",
-                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/CustomResourceHandler",
+                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/CustomResourceHandler",
                     "constructInfo": {
                       "fqn": "@aws-cdk/aws-lambda.SingletonFunction",
                       "version": "1.134.0"
@@ -404,11 +334,11 @@
                   },
                   "Asset1": {
                     "id": "Asset1",
-                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/Asset1",
+                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/Asset1",
                     "children": {
                       "Stage": {
                         "id": "Stage",
-                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/Asset1/Stage",
+                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/Asset1/Stage",
                         "constructInfo": {
                           "fqn": "@aws-cdk/core.AssetStaging",
                           "version": "1.134.0"
@@ -416,11 +346,11 @@
                       },
                       "AssetBucket": {
                         "id": "AssetBucket",
-                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/Asset1/AssetBucket",
+                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/Asset1/AssetBucket",
                         "children": {
                           "Notifications": {
                             "id": "Notifications",
-                            "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/Asset1/AssetBucket/Notifications",
+                            "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/Asset1/AssetBucket/Notifications",
                             "constructInfo": {
                               "fqn": "@aws-cdk/core.Construct",
                               "version": "1.134.0"
@@ -440,11 +370,11 @@
                   },
                   "CustomResource": {
                     "id": "CustomResource",
-                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/CustomResource",
+                    "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/CustomResource",
                     "children": {
                       "Default": {
                         "id": "Default",
-                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/JSCCDeployWithInvalidation/CustomResource/Default",
+                        "path": "MyJSCCStaticWebsite/JSCCStaticWebsite/RSCCL-Bucket-Deployment/CustomResource/Default",
                         "constructInfo": {
                           "fqn": "@aws-cdk/core.CfnResource",
                           "version": "1.134.0"
@@ -468,78 +398,10 @@
               "version": "1.134.0"
             }
           },
-          "Custom::S3AutoDeleteObjectsCustomResourceProvider": {
-            "id": "Custom::S3AutoDeleteObjectsCustomResourceProvider",
-            "path": "MyJSCCStaticWebsite/Custom::S3AutoDeleteObjectsCustomResourceProvider",
-            "children": {
-              "Staging": {
-                "id": "Staging",
-                "path": "MyJSCCStaticWebsite/Custom::S3AutoDeleteObjectsCustomResourceProvider/Staging",
-                "constructInfo": {
-                  "fqn": "@aws-cdk/core.AssetStaging",
-                  "version": "1.134.0"
-                }
-              },
-              "Role": {
-                "id": "Role",
-                "path": "MyJSCCStaticWebsite/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role",
-                "constructInfo": {
-                  "fqn": "@aws-cdk/core.CfnResource",
-                  "version": "1.134.0"
-                }
-              },
-              "Handler": {
-                "id": "Handler",
-                "path": "MyJSCCStaticWebsite/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
-                "constructInfo": {
-                  "fqn": "@aws-cdk/core.CfnResource",
-                  "version": "1.134.0"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "@aws-cdk/core.CustomResourceProvider",
-              "version": "1.134.0"
-            }
-          },
           "AssetParameters": {
             "id": "AssetParameters",
             "path": "MyJSCCStaticWebsite/AssetParameters",
             "children": {
-              "1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1": {
-                "id": "1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1",
-                "path": "MyJSCCStaticWebsite/AssetParameters/1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1",
-                "children": {
-                  "S3Bucket": {
-                    "id": "S3Bucket",
-                    "path": "MyJSCCStaticWebsite/AssetParameters/1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1/S3Bucket",
-                    "constructInfo": {
-                      "fqn": "@aws-cdk/core.CfnParameter",
-                      "version": "1.134.0"
-                    }
-                  },
-                  "S3VersionKey": {
-                    "id": "S3VersionKey",
-                    "path": "MyJSCCStaticWebsite/AssetParameters/1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1/S3VersionKey",
-                    "constructInfo": {
-                      "fqn": "@aws-cdk/core.CfnParameter",
-                      "version": "1.134.0"
-                    }
-                  },
-                  "ArtifactHash": {
-                    "id": "ArtifactHash",
-                    "path": "MyJSCCStaticWebsite/AssetParameters/1f7e277bd526ebce1983fa1e7a84a5281ec533d9187caaebb773681bbf7bf4c1/ArtifactHash",
-                    "constructInfo": {
-                      "fqn": "@aws-cdk/core.CfnParameter",
-                      "version": "1.134.0"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "@aws-cdk/core.Construct",
-                  "version": "1.134.0"
-                }
-              },
               "e9882ab123687399f934da0d45effe675ecc8ce13b40cb946f3e1d6141fe8d68": {
                 "id": "e9882ab123687399f934da0d45effe675ecc8ce13b40cb946f3e1d6141fe8d68",
                 "path": "MyJSCCStaticWebsite/AssetParameters/e9882ab123687399f934da0d45effe675ecc8ce13b40cb946f3e1d6141fe8d68",
@@ -608,13 +470,13 @@
                   "version": "1.134.0"
                 }
               },
-              "48d647e7c2349e881c109f54a2577646369067530a8cb0571001780073dc1fff": {
-                "id": "48d647e7c2349e881c109f54a2577646369067530a8cb0571001780073dc1fff",
-                "path": "MyJSCCStaticWebsite/AssetParameters/48d647e7c2349e881c109f54a2577646369067530a8cb0571001780073dc1fff",
+              "a89494b9215b4a3037fe65ef43b64922dafb5591ced01ea273529b6cc9ee5298": {
+                "id": "a89494b9215b4a3037fe65ef43b64922dafb5591ced01ea273529b6cc9ee5298",
+                "path": "MyJSCCStaticWebsite/AssetParameters/a89494b9215b4a3037fe65ef43b64922dafb5591ced01ea273529b6cc9ee5298",
                 "children": {
                   "S3Bucket": {
                     "id": "S3Bucket",
-                    "path": "MyJSCCStaticWebsite/AssetParameters/48d647e7c2349e881c109f54a2577646369067530a8cb0571001780073dc1fff/S3Bucket",
+                    "path": "MyJSCCStaticWebsite/AssetParameters/a89494b9215b4a3037fe65ef43b64922dafb5591ced01ea273529b6cc9ee5298/S3Bucket",
                     "constructInfo": {
                       "fqn": "@aws-cdk/core.CfnParameter",
                       "version": "1.134.0"
@@ -622,7 +484,7 @@
                   },
                   "S3VersionKey": {
                     "id": "S3VersionKey",
-                    "path": "MyJSCCStaticWebsite/AssetParameters/48d647e7c2349e881c109f54a2577646369067530a8cb0571001780073dc1fff/S3VersionKey",
+                    "path": "MyJSCCStaticWebsite/AssetParameters/a89494b9215b4a3037fe65ef43b64922dafb5591ced01ea273529b6cc9ee5298/S3VersionKey",
                     "constructInfo": {
                       "fqn": "@aws-cdk/core.CfnParameter",
                       "version": "1.134.0"
@@ -630,7 +492,7 @@
                   },
                   "ArtifactHash": {
                     "id": "ArtifactHash",
-                    "path": "MyJSCCStaticWebsite/AssetParameters/48d647e7c2349e881c109f54a2577646369067530a8cb0571001780073dc1fff/ArtifactHash",
+                    "path": "MyJSCCStaticWebsite/AssetParameters/a89494b9215b4a3037fe65ef43b64922dafb5591ced01ea273529b6cc9ee5298/ArtifactHash",
                     "constructInfo": {
                       "fqn": "@aws-cdk/core.CfnParameter",
                       "version": "1.134.0"
@@ -725,7 +587,7 @@
                                           },
                                           ":s3:::",
                                           {
-                                            "Ref": "AssetParameters48d647e7c2349e881c109f54a2577646369067530a8cb0571001780073dc1fffS3Bucket28015B6D"
+                                            "Ref": "AssetParametersa89494b9215b4a3037fe65ef43b64922dafb5591ced01ea273529b6cc9ee5298S3BucketA6A80D6B"
                                           }
                                         ]
                                       ]
@@ -740,7 +602,7 @@
                                           },
                                           ":s3:::",
                                           {
-                                            "Ref": "AssetParameters48d647e7c2349e881c109f54a2577646369067530a8cb0571001780073dc1fffS3Bucket28015B6D"
+                                            "Ref": "AssetParametersa89494b9215b4a3037fe65ef43b64922dafb5591ced01ea273529b6cc9ee5298S3BucketA6A80D6B"
                                           },
                                           "/*"
                                         ]
@@ -761,7 +623,7 @@
                                   "Resource": [
                                     {
                                       "Fn::GetAtt": [
-                                        "JSCCStaticWebsiteJSCCSiteBucket11BBD5A2",
+                                        "JSCCStaticWebsiteRSCCLStaticBucket3337F031",
                                         "Arn"
                                       ]
                                     },
@@ -771,7 +633,7 @@
                                         [
                                           {
                                             "Fn::GetAtt": [
-                                              "JSCCStaticWebsiteJSCCSiteBucket11BBD5A2",
+                                              "JSCCStaticWebsiteRSCCLStaticBucket3337F031",
                                               "Arn"
                                             ]
                                           },
@@ -906,7 +768,7 @@
                     "handler": "index.handler",
                     "layers": [
                       {
-                        "Ref": "JSCCStaticWebsiteJSCCDeployWithInvalidationAwsCliLayer074E3F2B"
+                        "Ref": "JSCCStaticWebsiteRSCCLBucketDeploymentAwsCliLayer7599EA0E"
                       }
                     ],
                     "runtime": "python3.7",

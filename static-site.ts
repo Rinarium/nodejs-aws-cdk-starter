@@ -11,9 +11,9 @@ export class StaticSite extends Construct {
   constructor(parent: Stack, name: string) {
     super(parent, name);
 
-    const cloudfrontOAI = new cloudfront.OriginAccessIdentity(this, "JSCC-OAI");
-    const siteBucket = new s3.Bucket(this, "JSCCStaticBucket", {
-        bucketName: "js-cc-cloudfront-s33",
+    const cloudfrontOAI = new cloudfront.OriginAccessIdentity(this, "RSCCL-OAI");
+    const siteBucket = new s3.Bucket(this, "RSCCLStaticBucket", {
+        bucketName: "rs-cc-lessons-cloudfront",
         websiteIndexDocument: 'index.html',
         publicReadAccess: false,
         blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL
@@ -23,7 +23,7 @@ export class StaticSite extends Construct {
         resources: [siteBucket.arnForObjects("*")],
         principals: [new iam.CanonicalUserPrincipal(cloudfrontOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId)]
     }));
-    const distribution = new cloudfront.CloudFrontWebDistribution(this, 'JSCCStaticDistribution', {
+    const distribution = new cloudfront.CloudFrontWebDistribution(this, 'RSCCLStaticDistribution', {
         originConfigs: [{
                 s3OriginSource: {
                     s3BucketSource: siteBucket,
@@ -34,7 +34,7 @@ export class StaticSite extends Construct {
                     }]
             }]
     });
-    new s3deploy.BucketDeployment(this, "JSCC-Bucket-Deployment", {
+    new s3deploy.BucketDeployment(this, "RSCCL-Bucket-Deployment", {
         sources: [s3deploy.Source.asset("./website")],
         destinationBucket: siteBucket,
         distribution,
